@@ -50,4 +50,16 @@ app.use(rateLimiter({
 
 //Start setup
 const port = process.env.PORT || 3000;
+const {connectDB} = require('./db/connectDB.js')
 
+const start = async () => {
+  try {
+    await connectDB();
+    await require('./models/userModel.js')
+    app.listen(port, () => console.log(`The server is running on port ${port}`));
+  } catch (error) {
+    console.error('Error starting the server:', error);
+  }
+};
+
+start()
